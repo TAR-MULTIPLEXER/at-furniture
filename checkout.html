@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Checkout – Furniture Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5/0/css/all.min.css">
+  <style>
+    /* Same base styles as cart.html */
+      :root {
+  --bg: #F5F0E6;          
+  --text: #2A2A2A;    
+  --accent: #5D4037;    
+  --highlight: #C6A961;   
+  --card: #FFFFFF;
+  --border: #E0D8C8;
+}
+
+    .dark-theme {
+      --bg: #1A1815;
+      --text: #E8E2D5;
+      --card: #25221F;
+      --border: #3A352F;
+      --shadow: rgba(0,0,0,0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+    }
+    header {
+      background-color: var(--accent);
+      color: white;
+      padding: 1.2rem 5%;
+      text-align: center;
+    }
+    nav {
+      background-color: var(--card);
+      padding: 1rem 5%;
+      box-shadow: 0 2px 8px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      padding: 3rem 5%;
+      display: flex;
+      gap: 2rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .form-section, .summary-section {
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 500px;
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    h1 {
+      text-align: center;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.2rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: bold;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.8rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: var(--text);
+      font-family: 'Georgia', serif;
+    }
+
+    textarea.form-control {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--highlight);
+      color: var(--text);
+      padding: 0.9rem 2rem;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .order-item {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    footer {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+    .cart-count {
+  background: var(--highlight); /* Gold: #C6A961 */
+  color: var(--text);           /* Dark text */
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 4px;
+  vertical-align: top;
+}
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Furniture Store</h1>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+       <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
+      </ul>
+      <button id="themeToggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="form-section">
+      <h2>Reservation Details</h2>
+      <form id="checkoutForm">
+        <div class="form-group">
+          <label for="name">Full Name</label>
+          <input type="text" id="name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="phone">Phone</label>
+          <input type="tel" id="phone" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label for="address">Delivery Address</label>
+          <textarea id="address" class="form-control" placeholder="Street, City, ZIP" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="notes">Special Instructions (Optional)</label>
+          <textarea id="notes" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn">Confirm Reservation</button>
+      </form>
+    </div>
+
+    <div class="summary-section">
+      <h2>Order Summary</h2>
+      <div id="orderSummary">
+        <!-- Items will load here -->
+      </div>
+      <div style="margin-top: 1.5rem; text-align: right;">
+        <strong>Total: <span id="totalAmount">$0</span></strong>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Furniture Store. Crafted with care.</p>
+  </footer>
+
+  <script>
+    // Theme toggle (same as before)
+    const html = document.getElementById('htmlRoot');
+    const toggleBtn = document.getElementById('themeToggle');
+    const icon = toggleBtn.querySelector('i');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      html.classList.add('dark-theme');
+      icon.className = 'fas fa-sun';
+    }
+    toggleBtn.addEventListener('click', () => {
+      html.classList.toggle('dark-theme');
+      const isDark = html.classList.contains('dark-theme');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    // Load cart summary
+    function loadSummary() {
+      const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+      const summaryEl = document.getElementById('orderSummary');
+      const totalEl = document.getElementById('totalAmount');
+
+      if (cart.length === 0) {
+        summaryEl.innerHTML = '<p>No items.</p>';
+        totalEl.textContent = '$0';
+        return;
+      }
+
+      let total = 0;
+      let html = '';
+      cart.forEach(item => {
+        const price = parseFloat(item.price);
+        const lineTotal = price * item.quantity;
+        total += lineTotal;
+        html += `<div class="order-item"><span>${item.name} × ${item.quantity}</span><span>$${lineTotal.toFixed(2)}</span></div>`;
+      });
+
+      summaryEl.innerHTML = html;
+      totalEl.textContent = `$${total.toFixed(2)}`;
+    }
+
+    // Form submission
+    document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('✅ Reservation confirmed!\nOur team will contact you within 24 hours to finalize delivery.');
+      localStorage.removeItem('cart'); // Clear cart
+      window.location.href = 'index.html';
+    });
+
+    // Load on page load
+    loadSummary();
+    function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const countElements = document.querySelectorAll('.cart-count');
+    countElements.forEach(el => {
+      el.textContent = totalCount;
+      el.style.display = totalCount > 0 ? 'inline' : 'none';
+    });
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+  </script>
+</body>
+</html>

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Our Collection – Furniture Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+      :root {
+  --bg: #F5F0E6;          
+  --text: #2A2A2A;    
+  --accent: #5D4037;    
+  --highlight: #C6A961;   
+  --card: #FFFFFF;
+  --border: #E0D8C8;
+}
+
+    .dark-theme {
+      --bg: #1A1815;
+      --text: #E8E2D5;
+      --card: #25221F;
+      --border: #3A352F;
+      --shadow: rgba(0,0,0,0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background-color: var(--accent);
+      color: white;
+      padding: 1.2rem 5%;
+      text-align: center;
+    }
+
+    nav {
+      background-color: var(--card);
+      padding: 1rem 5%;
+      box-shadow: 0 2px 8px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      padding: 3rem 5%;
+    }
+
+    h1 {
+      text-align: center;
+      /* color: var(--text); */
+      margin-bottom: 2.5rem;
+      font-size: 2.4rem;
+    }
+
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--card);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 6px 15px var(--shadow);
+      transition: transform 0.3s;
+    }
+
+    .product-card:hover {
+      transform: translateY(-8px);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+
+    .product-info {
+      padding: 1.2rem;
+    }
+
+    .product-info h2 {
+      margin-bottom: 0.5rem;
+      color: var(--text);
+      font-size: 1.4rem;
+    }
+
+    .price {
+      color: var(--highlight);
+      font-weight: bold;
+      font-size: 1.2rem;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--highlight);
+      color: var(--text);
+      padding: 0.6rem 1.2rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      font-size: 0.95rem;
+      margin-top: 1rem;
+    }
+
+    footer {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+.discount-badge {
+  position: absolute;
+  top: 14px;
+  right: -12px;
+  background: #e74c3c; /* Vibrant red */
+  color: white;
+  font-weight: bold;
+  padding: 6px 20px;
+  font-size: 0.95rem;
+  transform: rotate(45deg);
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  letter-spacing: 0.5px;
+}
+
+.product-card {
+  position: relative;
+}
+.oldprice{
+  color: #888;
+  font-size: 1rem;
+}
+.cart-count {
+  background: var(--highlight); /* Gold: #C6A961 */
+  color: var(--text);           /* Dark text */
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 4px;
+  vertical-align: top;
+}
+    @media (max-width: 768px) {
+      nav ul { flex-wrap: wrap; justify-content: center; gap: 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Furniture Store</h1>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
+      </ul>
+      <button id="themeToggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <h1>Our Collection</h1>
+    <div class="products-grid">
+      <div class="product-card">
+        <img src="picture/lauxary_sofa.jpg" alt="Sofa">
+        <div class="product-info">
+          <h2>Luxury Velvet Sofa</h2>
+          <div class="price">$999</div>
+          <a href="product-detail.html?type=sofa" class="btn">View Details</a>
+        </div>
+      </div>
+      <div class="product-card">
+         <div class="discount-badge">20% OFF</div>
+        <img src="picture/queenbed.jpg" alt="Bed">
+        <div class="product-info">
+          <h2>Queen Oak Bed</h2>
+          <div class="oldprice"><del>$799</del></div>
+          <div class="price">$640</div>
+          <a href="product-detail.html?type=bed" class="btn">View Details</a>
+        </div>
+      </div>
+      <div class="product-card">
+        <img src="picture/Modern-Mid-Century-Glass-Dining-Table-1.jpg" alt="Table">
+        <div class="product-info">
+          <h2>Modern Glass Dining Table</h2>
+          <div class="price">$499</div>
+          <a href="product-detail.html?type=table" class="btn">View Details</a>
+        </div>
+      </div>
+    <div class="product-card">
+  <img src="picture/beige_sofa.jpg" alt="Sofa Beige">
+  <div class="product-info">
+    <h2>Beige Linen Sofa</h2>
+    <div class="price">$899</div>
+    <a href="product-detail.html?type=bsofa" class="btn">View Details</a>
+  </div>
+</div>
+      <div class="product-card">
+        <img src="picture/king_bed.jpg" alt="Walnut Bed">
+        <div class="product-info">
+          <h2>King Walnut Bed</h2>
+          <div class="price">$1,099</div>
+          <a href="product-detail.html?type=kbed" class="btn">View Details</a>
+        </div>
+      </div>
+     <div class="product-card">
+  <div class="discount-badge">35% OFF</div>
+  <img src="picture/marble_table.jpg" alt="Marble Table">
+  <div class="product-info">
+    <h2>Marble Top Dining Table</h2>
+    <div class="oldprice"><del>$455</del></div>
+    <div class="price">$699</div>
+    <a href="product-detail.html?type=mtable" class="btn">View Details</a>
+  </div>
+</div>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Furniture Store. Crafted with care.</p>
+  </footer>
+
+  <script>
+    const html = document.getElementById('htmlRoot');
+    const toggleBtn = document.getElementById('themeToggle');
+    const icon = toggleBtn.querySelector('i');
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      html.classList.add('dark-theme');
+      icon.className = 'fas fa-sun';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      html.classList.toggle('dark-theme');
+      const isDark = html.classList.contains('dark-theme');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    });
+     function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const countElements = document.querySelectorAll('.cart-count');
+    countElements.forEach(el => {
+      el.textContent = totalCount;
+      el.style.display = totalCount > 0 ? 'inline' : 'none';
+    });
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+  </script>
+</body>
+</html>

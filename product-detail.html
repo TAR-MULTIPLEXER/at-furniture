@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en" id="htmlRoot">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Product Details – Furniture Store</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+      :root {
+  --bg: #F5F0E6;          
+  --text: #2A2A2A;    
+  --accent: #5D4037;    
+  --highlight: #C6A961;   
+  --card: #FFFFFF;
+  --border: #E0D8C8;
+}
+
+    .dark-theme {
+      --bg: #1A1815;
+      --text: #E8E2D5;
+      --card: #25221F;
+      --border: #3A352F;
+      --shadow: rgba(0,0,0,0.3);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Georgia', serif;
+      transition: background-color 0.4s, color 0.4s;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      background-color: var(--accent);
+      color: white;
+      padding: 1.2rem 5%;
+      text-align: center;
+    }
+
+    nav {
+      background-color: var(--card);
+      padding: 1rem 5%;
+      box-shadow: 0 2px 8px var(--shadow);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: var(--accent);
+      font-weight: 600;
+    }
+
+    .theme-toggle {
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.3rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    main {
+      padding: 2rem 5%;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 2rem;
+      margin-top: 80px;
+    }
+
+    .product-preview {
+      flex: 1;
+      min-width: 300px;
+      text-align: center;
+    }
+
+    .product-preview img {
+      width: 100%;
+      max-width: 500px;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .product-info {
+      flex: 1;
+      min-width: 300px;
+    }
+
+    .product-info h1 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+    }
+
+    .price {
+      font-size: 1.8rem;
+      color: var(--highlight);
+      margin: 1rem 0;
+    }
+
+    .btn {
+      display: inline-block;
+      background: var(--highlight);
+      color: var(--text);
+      padding: 0.9rem 2rem;
+      text-decoration: none;
+      border-radius: 6px;
+      font-weight: bold;
+      margin-top: 1.5rem;
+      cursor: pointer;
+    }
+
+    footer {
+      background: var(--accent);
+      color: white;
+      text-align: center;
+      padding: 1.5rem;
+      margin-top: 3rem;
+    }
+.oldprice{
+  color: #888;
+  font-size: 1.2rem;
+}
+.cart-count {
+  background: var(--highlight); /* Gold: #C6A961 */
+  color: var(--text);           /* Dark text */
+  font-size: 0.7rem;
+  font-weight: bold;
+  padding: 2px 6px;
+  border-radius: 10px;
+  margin-left: 4px;
+  vertical-align: top;
+}
+    @media (max-width: 768px) {
+      main { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Furniture Store</h1>
+  </header>
+
+  <nav>
+    <div class="nav-container">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+     <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
+      </ul>
+      <button id="themeToggle" class="theme-toggle">
+        <i class="fas fa-moon"></i>
+      </button>
+    </div>
+  </nav>
+
+  <main>
+    <div class="product-preview">
+      <img id="productImg" src="" alt="Product">
+    </div>
+
+    <div class="product-info">
+      <h1 id="productName">Loading...</h1>
+      <div class="oldprice"><del id="oldprice">458</del></div>
+      <div class="price" id="price"></div>
+      <p id="description"></p>
+      <p id="specs"></p>
+
+      <button class="btn" onclick="addToCart()">Add to Cart</button>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Furniture Store. Crafted with care.</p>
+  </footer>
+
+  <script>
+    // Theme toggle
+    const html = document.getElementById('htmlRoot');
+    const toggleBtn = document.getElementById('themeToggle');
+    const icon = toggleBtn.querySelector('i');
+
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    if (savedTheme === 'dark') {
+      html.classList.add('dark-theme');
+      icon.className = 'fas fa-sun';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      html.classList.toggle('dark-theme');
+      const isDark = html.classList.contains('dark-theme');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
+    });
+
+    // Simplified product data — one image per product
+    const products = {
+      sofa: {
+        name: "Luxury Velvet Sofa",
+        price: "$999",
+        image: "picture/lauxary_sofa.jpg",
+        description: "Plush, deep-seated sofa with solid wood frame and premium velvet upholstery. Perfect for modern living rooms.",
+        specs: "<strong>Material:</strong> Velvet, Solid Wood<br><strong>Dimensions:</strong> 220 x 90 x 85 cm<br><strong>Color:</strong> Charcoal Gray"
+      },
+      bed: {
+        name: "Queen Oak Bed",
+        oldprice: "$799",
+        price: "$640",
+        image: "picture/queenbed.jpg",
+        description: "Handcrafted solid oak bed with slatted base and minimalist design. Durable, elegant, and timeless.",
+        specs: "<strong>Material:</strong> Solid Oak<br><strong>Size:</strong> Queen (160 x 200 cm)<br><strong>Finish:</strong> Natural Oak"
+      },
+      table: {
+        name: "Modern Glass Dining Table",
+        price: "$499",
+        image: "picture/Modern-Mid-Century-Glass-Dining-Table-1.jpg",
+        description: "Sleek tempered glass top with powder-coated steel legs. Seats 4–6 people comfortably.",
+        specs: "<strong>Material:</strong> Tempered Glass, Steel<br><strong>Dimensions:</strong> 180 x 90 x 75 cm<br><strong>Shape:</strong> Rectangle"
+      },
+  bsofa: {
+  name: "Beige Linen Sofa",
+  price: "$899",
+  image: "picture/beige_sofa.jpg",
+  description: "A relaxed, inviting sofa upholstered in premium beige linen fabric. Features solid hardwood frame, high-resilience foam cushions, and tapered wooden legs for a timeless mid-century look.",
+  specs: "<strong>Material:</strong> Linen Fabric, Solid Hardwood<br><strong>Dimensions:</strong> 210 x 95 x 80 cm<br><strong>Seating:</strong> 3 persons<br><strong>Color:</strong> Warm Beige"
+},
+kbed: {
+  name: "King Walnut Bed",
+  price: "$1,099",
+  image: "picture/king_bed.jpg",
+  description: "Stately king-size bed crafted from solid American walnut. Features a low-profile platform design, slatted base for optimal mattress support, and smooth hand-rubbed finish that highlights the wood’s natural grain.",
+  specs: "<strong>Material:</strong> Solid Walnut Wood<br><strong>Size:</strong> King (180 x 200 cm)<br><strong>Height:</strong> 45 cm (platform)<br><strong>Finish:</strong> Natural Walnut"
+},
+mtable: {
+  name: "Marble Top Dining Table",
+  oldprice: "$699",
+  price: "$455",
+  image: "picture/marble_table.jpg",
+  description: "Elegant dining table with a genuine white Carrara marble top and brushed brass-finished metal base. Combines luxury and durability—perfect for intimate dinners or weekend gatherings.",
+  specs: "<strong>Material:</strong> Carrara Marble, Brushed Brass Steel<br><strong>Dimensions:</strong> 160 x 90 x 75 cm<br><strong>Shape:</strong> Rectangle<br><strong>Seats:</strong> 6 people"
+}
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const type = urlParams.get('type');
+
+    if (products[type]) {
+      const product = products[type];
+      document.getElementById('productName').textContent = product.name;
+      document.getElementById('oldprice').textContent = product.oldprice || '';
+      document.getElementById('price').textContent = product.price;
+      document.getElementById('productImg').src = product.image;
+      document.getElementById('description').textContent = product.description;
+      document.getElementById('specs').innerHTML = product.specs;
+    } else {
+      document.querySelector('main').innerHTML = `
+        <div style="color:var(--text); text-align:center; margin:100px auto; max-width:600px;">
+          <h2>Product Not Found</h2>
+          <p>We couldn't find the requested item.</p>
+          <a href="products.html" class="btn" style="display:inline-block; margin-top:20px;">← Back to Products</a>
+        </div>
+      `;
+    }
+    // Cart functions
+function getCart() {
+  return JSON.parse(localStorage.getItem('cart') || '[]');
+}
+
+function saveCart(cart) {
+  localStorage.setItem('cart', JSON.stringify(cart));
+}
+
+function addToCart() {
+  const type = new URLSearchParams(window.location.search).get('type');
+  const product = products[type];
+  
+  if (!product) return;
+  
+  const cart = getCart();
+  const existing = cart.find(item => item.type === type);
+  
+  if (existing) {
+    existing.quantity += 1;
+  } else {
+    cart.push({
+      type: type,
+      name: product.name,
+      price: product.price.replace('$', ''),
+      oldprice: product.oldprice ? product.oldprice.replace('$', '') : null,
+      image: product.image,
+      quantity: 1
+    });
+  }
+  
+  saveCart(cart);
+  alert(`✅ ${product.name} added to cart!`);
+}
+ function updateCartCount() {
+    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
+    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+    const countElements = document.querySelectorAll('.cart-count');
+    countElements.forEach(el => {
+      el.textContent = totalCount;
+      el.style.display = totalCount > 0 ? 'inline' : 'none';
+    });
+  }
+
+  // Run on page load
+  document.addEventListener('DOMContentLoaded', updateCartCount);
+  </script>
+</body>
+</html>
