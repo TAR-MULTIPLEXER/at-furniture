@@ -1,20 +1,21 @@
 <!DOCTYPE html>
-<html lang="en" id="htmlRoot">
+<html lang="en" id="root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <link rel="shortcut icon" href="picture/logo.jpg" type="image/x-icon">
   <title>Product Details – Furniture Store</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-      :root {
-  --bg: #F5F0E6;          
-  --text: #2A2A2A;    
-  --accent: #5D4037;    
-  --highlight: #C6A961;   
-  --card: #FFFFFF;
-  --border: #E0D8C8;
-}
+    :root {
+      --bg: #F5F0E6;
+      --text: #2A2A2A;
+      --accent: #5D4037;
+      --highlight: #C6A961;
+      --card: #FFFFFF;
+      --border: #E0D8C8;
+      --shadow: rgba(0,0,0,0.1);
+      --nav-height: 70px;
+    }
 
     .dark-theme {
       --bg: #1A1815;
@@ -32,9 +33,15 @@
       transition: background-color 0.4s, color 0.4s;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
     }
 
     header {
@@ -44,31 +51,61 @@
       text-align: center;
     }
 
+    header h1 {
+      font-size: 1.8rem;
+    }
+
     nav {
       background-color: var(--card);
-      padding: 1rem 5%;
+      padding: 0 5%;
       box-shadow: 0 2px 8px var(--shadow);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      height: var(--nav-height);
     }
 
     .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 100%;
     }
 
     nav ul {
       list-style: none;
       display: flex;
       gap: 1.5rem;
+      align-items: center;
     }
 
     nav a {
       text-decoration: none;
       color: var(--accent);
       font-weight: 600;
+      font-size: 1.1rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--highlight);
+    }
+
+    .cart-count {
+      background: var(--highlight);
+      color: var(--text);
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
+      vertical-align: top;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .theme-toggle {
@@ -83,14 +120,95 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--border);
+    }
+
+    .tognav {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+
+    .tognav:hover {
+      background: var(--border);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      width: 100%;
+      background: var(--card);
+      box-shadow: 0 4px 15px var(--shadow);
+      z-index: 999;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+    }
+
+    .mobile-menu ul li {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu ul li:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu ul li a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 5%;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .mobile-menu ul li a:hover {
+      background: var(--border);
+      color: var(--highlight);
+    }
+
+    .mobile-menu ul li a i {
+      width: 24px;
+      text-align: center;
+      color: var(--highlight);
     }
 
     main {
-      padding: 2rem 5%;
+      padding: 3rem 5%;
       display: flex;
       flex-wrap: wrap;
-      gap: 2rem;
-      margin-top: 80px;
+      gap: 3rem;
+      justify-content: center;
+      max-width: 1200px;
+      margin: 2rem auto;
+      min-height: calc(100vh - var(--nav-height) - 150px);
     }
 
     .product-preview {
@@ -102,27 +220,62 @@
     .product-preview img {
       width: 100%;
       max-width: 500px;
-      border-radius: 8px;
+      border-radius: 12px;
       box-shadow: 0 8px 20px var(--shadow);
+      background: var(--card);
+      padding: 1rem;
+      transition: transform 0.3s;
+    }
+
+    .product-preview img:hover {
+      transform: scale(1.02);
     }
 
     .product-info {
       flex: 1;
       min-width: 300px;
+      background: var(--card);
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 6px 15px var(--shadow);
+      border: 1px solid var(--border);
     }
 
     .product-info h1 {
       color: var(--accent);
       margin-bottom: 1rem;
+      font-size: 2rem;
+      line-height: 1.3;
+    }
+
+    .oldprice {
+      color: #888;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
     }
 
     .price {
       font-size: 1.8rem;
       color: var(--highlight);
+      font-weight: bold;
       margin: 1rem 0;
     }
 
-    .btn {
+    .product-info p {
+      margin-bottom: 1rem;
+      line-height: 1.7;
+      color: var(--text);
+    }
+
+    .product-info p#specs {
+      background: var(--bg);
+      padding: 1rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      margin-bottom: 1.5rem;
+    }
+
+    .addtocartbut {
       display: inline-block;
       background: var(--highlight);
       color: var(--text);
@@ -130,8 +283,45 @@
       text-decoration: none;
       border-radius: 6px;
       font-weight: bold;
-      margin-top: 1.5rem;
       cursor: pointer;
+      border: none;
+      font-family: 'Georgia', serif;
+      font-size: 1rem;
+      width: 100%;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .addtocartbut:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 15px rgba(198,169,97,0.4);
+    }
+
+    .error-message {
+      color: var(--text);
+      text-align: center;
+      margin: 4rem auto;
+      max-width: 600px;
+      padding: 2rem;
+      background: var(--card);
+      border-radius: 12px;
+      box-shadow: 0 6px 15px var(--shadow);
+    }
+
+    .error-message h2 {
+      color: var(--accent);
+      margin-bottom: 1rem;
+      font-size: 1.6rem;
+    }
+
+    .error-message p {
+      margin-bottom: 1.5rem;
+      color: var(--text);
+    }
+
+    .error-message .addtocartbut {
+      display: inline-block;
+      width: auto;
+      padding: 0.8rem 1.8rem;
     }
 
     footer {
@@ -141,22 +331,257 @@
       padding: 1.5rem;
       margin-top: 3rem;
     }
-.oldprice{
-  color: #888;
-  font-size: 1.2rem;
-}
-.cart-count {
-  background: var(--highlight); /* Gold: #C6A961 */
-  color: var(--text);           /* Dark text */
-  font-size: 0.7rem;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-left: 4px;
-  vertical-align: top;
-}
+
+    @media (max-width: 992px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      nav ul {
+        gap: 1.2rem;
+      }
+
+      nav a {
+        font-size: 1rem;
+      }
+
+      main {
+        gap: 2rem;
+        padding: 2.5rem 4%;
+      }
+
+      .product-info h1 {
+        font-size: 1.8rem;
+      }
+
+      .price {
+        font-size: 1.6rem;
+      }
+
+      .product-preview img {
+        max-width: 450px;
+      }
+    }
+
     @media (max-width: 768px) {
-      main { flex-direction: column; }
+      :root {
+        --nav-height: 60px;
+      }
+
+      header {
+        padding: 1rem 4%;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+      }
+
+      nav {
+        padding: 0 4%;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .tognav {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+      }
+
+      main {
+        flex-direction: column;
+        padding: 2rem 4%;
+        gap: 2rem;
+        margin: 1.5rem auto;
+      }
+
+      .product-preview, .product-info {
+        min-width: 100%;
+      }
+
+      .product-info {
+        padding: 1.5rem 1.2rem;
+      }
+
+      .product-info h1 {
+        font-size: 1.5rem;
+      }
+
+      .oldprice {
+        font-size: 1.05rem;
+      }
+
+      .price {
+        font-size: 1.5rem;
+      }
+
+      .product-preview img {
+        max-width: 100%;
+        padding: 0.8rem;
+      }
+
+      footer {
+        padding: 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0.8rem 3%;
+      }
+
+      header h1 {
+        font-size: 1.2rem;
+      }
+
+      nav {
+        padding: 0 3%;
+      }
+
+      main {
+        padding: 1.5rem 3%;
+        gap: 1.5rem;
+        margin: 1rem auto;
+      }
+
+      .product-info {
+        padding: 1.3rem 1rem;
+        border-radius: 10px;
+      }
+
+      .product-info h1 {
+        font-size: 1.3rem;
+      }
+
+      .oldprice {
+        font-size: 0.95rem;
+      }
+
+      .price {
+        font-size: 1.35rem;
+        margin: 0.8rem 0;
+      }
+
+      .product-info p {
+        font-size: 0.95rem;
+      }
+
+      .product-info p#specs {
+        padding: 0.8rem;
+        font-size: 0.9rem;
+      }
+
+      .addtocartbut {
+        padding: 0.85rem 1.5rem;
+        font-size: 0.95rem;
+      }
+
+      .product-preview img {
+        padding: 0.6rem;
+        border-radius: 10px;
+      }
+
+      .error-message {
+        margin: 2rem 1rem;
+        padding: 1.5rem;
+      }
+
+      .error-message h2 {
+        font-size: 1.3rem;
+      }
+
+      footer {
+        padding: 1rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      header h1 {
+        font-size: 1.1rem;
+      }
+
+      .product-info {
+        padding: 1.1rem 0.9rem;
+      }
+
+      .product-info h1 {
+        font-size: 1.2rem;
+      }
+
+      .price {
+        font-size: 1.25rem;
+      }
+
+      .product-info p {
+        font-size: 0.9rem;
+      }
+
+      .addtocartbut {
+        padding: 0.8rem 1.3rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      :root {
+        --nav-height: 55px;
+      }
+
+      header {
+        padding: 0.6rem 3%;
+      }
+
+      header h1 {
+        font-size: 1.1rem;
+      }
+
+      nav {
+        padding: 0 3%;
+      }
+
+      main {
+        padding: 1.5rem 3%;
+        gap: 1.2rem;
+        margin: 1rem auto;
+      }
+
+      .product-info {
+        padding: 1.2rem 1rem;
+      }
+
+      .product-info h1 {
+        font-size: 1.25rem;
+      }
+
+      .price {
+        font-size: 1.3rem;
+      }
+
+      .product-preview img {
+        max-width: 300px;
+      }
+
+      .addtocartbut {
+        padding: 0.75rem 1.3rem;
+        font-size: 0.88rem;
+      }
+
+      footer {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
@@ -173,27 +598,41 @@
         <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-     <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
+        <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
       </ul>
-      <button id="themeToggle" class="theme-toggle">
-        <i class="fas fa-moon"></i>
-      </button>
+      <div class="nav-right">
+        <button id="toggletheme" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="tognav" id="tognav">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
 
+  <div class="mobile-menu" id="mobilemenu">
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="products.html"><i class="fas fa-box"></i> Products</a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count">0</span></a></li>
+    </ul>
+  </div>
+
   <main>
     <div class="product-preview">
-      <img id="productImg" src="" alt="Product">
+      <img id="pimg" src="" alt="Product">
     </div>
 
     <div class="product-info">
       <h1 id="productName">Loading...</h1>
-      <div class="oldprice"><del id="oldprice">458</del></div>
+      <div class="oldprice"><del id="oldprice"></del></div>
       <div class="price" id="price"></div>
       <p id="description"></p>
       <p id="specs"></p>
-
-      <button class="btn" onclick="addToCart()">Add to Cart</button>
+      <button class="addtocartbut" onclick="addtocart()">Add to Cart</button>
     </div>
   </main>
 
@@ -201,26 +640,8 @@
     <p>&copy; 2025 Furniture Store. Crafted with care.</p>
   </footer>
 
+  <script src="darkmode.js"></script>
   <script>
-    // Theme toggle
-    const html = document.getElementById('htmlRoot');
-    const toggleBtn = document.getElementById('themeToggle');
-    const icon = toggleBtn.querySelector('i');
-
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    if (savedTheme === 'dark') {
-      html.classList.add('dark-theme');
-      icon.className = 'fas fa-sun';
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      html.classList.toggle('dark-theme');
-      const isDark = html.classList.contains('dark-theme');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    });
-
-    // Simplified product data — one image per product
     const products = {
       sofa: {
         name: "Luxury Velvet Sofa",
@@ -244,96 +665,84 @@
         description: "Sleek tempered glass top with powder-coated steel legs. Seats 4–6 people comfortably.",
         specs: "<strong>Material:</strong> Tempered Glass, Steel<br><strong>Dimensions:</strong> 180 x 90 x 75 cm<br><strong>Shape:</strong> Rectangle"
       },
-  bsofa: {
-  name: "Beige Linen Sofa",
-  price: "$899",
-  image: "picture/beige_sofa.jpg",
-  description: "A relaxed, inviting sofa upholstered in premium beige linen fabric. Features solid hardwood frame, high-resilience foam cushions, and tapered wooden legs for a timeless mid-century look.",
-  specs: "<strong>Material:</strong> Linen Fabric, Solid Hardwood<br><strong>Dimensions:</strong> 210 x 95 x 80 cm<br><strong>Seating:</strong> 3 persons<br><strong>Color:</strong> Warm Beige"
-},
-kbed: {
-  name: "King Walnut Bed",
-  price: "$1,099",
-  image: "picture/king_bed.jpg",
-  description: "Stately king-size bed crafted from solid American walnut. Features a low-profile platform design, slatted base for optimal mattress support, and smooth hand-rubbed finish that highlights the wood’s natural grain.",
-  specs: "<strong>Material:</strong> Solid Walnut Wood<br><strong>Size:</strong> King (180 x 200 cm)<br><strong>Height:</strong> 45 cm (platform)<br><strong>Finish:</strong> Natural Walnut"
-},
-mtable: {
-  name: "Marble Top Dining Table",
-  oldprice: "$699",
-  price: "$455",
-  image: "picture/marble_table.jpg",
-  description: "Elegant dining table with a genuine white Carrara marble top and brushed brass-finished metal base. Combines luxury and durability—perfect for intimate dinners or weekend gatherings.",
-  specs: "<strong>Material:</strong> Carrara Marble, Brushed Brass Steel<br><strong>Dimensions:</strong> 160 x 90 x 75 cm<br><strong>Shape:</strong> Rectangle<br><strong>Seats:</strong> 6 people"
-}
+      bsofa: {
+        name: "Beige Linen Sofa",
+        price: "$899",
+        image: "picture/beige_sofa.jpg",
+        description: "A relaxed, inviting sofa upholstered in premium beige linen fabric. Features solid hardwood frame, high-resilience foam cushions, and tapered wooden legs for a timeless mid-century look.",
+        specs: "<strong>Material:</strong> Linen Fabric, Solid Hardwood<br><strong>Dimensions:</strong> 210 x 95 x 80 cm<br><strong>Seating:</strong> 3 persons<br><strong>Color:</strong> Warm Beige"
+      },
+      kbed: {
+        name: "King Walnut Bed",
+        price: "$1,099",
+        image: "picture/king_bed.jpg",
+        description: "Stately king-size bed crafted from solid American walnut. Features a low-profile platform design, slatted base for optimal mattress support, and smooth hand-rubbed finish that highlights the wood's natural grain.",
+        specs: "<strong>Material:</strong> Solid Walnut Wood<br><strong>Size:</strong> King (180 x 200 cm)<br><strong>Height:</strong> 45 cm (platform)<br><strong>Finish:</strong> Natural Walnut"
+      },
+      mtable: {
+        name: "Marble Top Dining Table",
+        oldprice: "$699",
+        price: "$455",
+        image: "picture/marble_table.jpg",
+        description: "Elegant dining table with a genuine white Carrara marble top and brushed brass-finished metal base. Combines luxury and durability—perfect for intimate dinners or weekend gatherings.",
+        specs: "<strong>Material:</strong> Carrara Marble, Brushed Brass Steel<br><strong>Dimensions:</strong> 160 x 90 x 75 cm<br><strong>Shape:</strong> Rectangle<br><strong>Seats:</strong> 6 people"
+      }
     };
 
-    const urlParams = new URLSearchParams(window.location.search);
-    const type = urlParams.get('type');
+    const urlsrch = new URLSearchParams(window.location.search);
+    const type = urlsrch.get('type');
 
     if (products[type]) {
       const product = products[type];
       document.getElementById('productName').textContent = product.name;
       document.getElementById('oldprice').textContent = product.oldprice || '';
       document.getElementById('price').textContent = product.price;
-      document.getElementById('productImg').src = product.image;
+      document.getElementById('pimg').src = product.image;
       document.getElementById('description').textContent = product.description;
       document.getElementById('specs').innerHTML = product.specs;
     } else {
       document.querySelector('main').innerHTML = `
-        <div style="color:var(--text); text-align:center; margin:100px auto; max-width:600px;">
+        <div class="error-message">
           <h2>Product Not Found</h2>
           <p>We couldn't find the requested item.</p>
-          <a href="products.html" class="btn" style="display:inline-block; margin-top:20px;">← Back to Products</a>
+          <a href="products.html" class="addtocartbut">← Back to Products</a>
         </div>
       `;
     }
-    // Cart functions
-function getCart() {
-  return JSON.parse(localStorage.getItem('cart') || '[]');
-}
 
-function saveCart(cart) {
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
+    function getcart() {
+      return JSON.parse(localStorage.getItem('cart') || '[]');
+    }
 
-function addToCart() {
-  const type = new URLSearchParams(window.location.search).get('type');
-  const product = products[type];
-  
-  if (!product) return;
-  
-  const cart = getCart();
-  const existing = cart.find(item => item.type === type);
-  
-  if (existing) {
-    existing.quantity += 1;
-  } else {
-    cart.push({
-      type: type,
-      name: product.name,
-      price: product.price.replace('$', ''),
-      oldprice: product.oldprice ? product.oldprice.replace('$', '') : null,
-      image: product.image,
-      quantity: 1
-    });
-  }
-  
-  saveCart(cart);
-  alert(`✅ ${product.name} added to cart!`);
-}
- function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-    const countElements = document.querySelectorAll('.cart-count');
-    countElements.forEach(el => {
-      el.textContent = totalCount;
-      el.style.display = totalCount > 0 ? 'inline' : 'none';
-    });
-  }
+    function savecart(cart) {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
 
-  // Run on page load
-  document.addEventListener('DOMContentLoaded', updateCartCount);
+    function addtocart() {
+      const type = new URLSearchParams(window.location.search).get('type');
+      const product = products[type];
+      
+      if (!product) return;
+      
+      const cart = getcart();
+      const existing = cart.find(item => item.type === type);
+      
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          type: type,
+          name: product.name,
+          price: product.price.replace('$', ''),
+          oldprice: product.oldprice ? product.oldprice.replace('$', '') : null,
+          image: product.image,
+          quantity: 1
+        });
+      }
+      
+      savecart(cart);
+      alert(`✅ ${product.name} added to cart!`);
+    }
   </script>
 </body>
 </html>

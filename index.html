@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" id="htmlRoot">
+<html lang="en" id="root">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -7,24 +7,17 @@
   <title>Furniture Store – Crafted for Life</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
-   :root {
-  --bg: #F5F0E6;          
-  --text: #2A2A2A;    
-  --accent: #5D4037;    
-  --highlight: #C6A961;   
-  --card: #FFFFFF;
-  --border: #E0D8C8;
-}
-.cart-count {
-  background: var(--highlight); /* Gold: #C6A961 */
-  color: var(--text);           /* Dark text */
-  font-size: 0.7rem;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-left: 4px;
-  vertical-align: top;
-}
+    :root {
+      --bg: #F5F0E6;
+      --text: #2A2A2A;
+      --accent: #5D4037;
+      --highlight: #C6A961;
+      --card: #FFFFFF;
+      --border: #E0D8C8;
+      --shadow: rgba(0,0,0,0.1);
+      --nav-height: 70px;
+    }
+
     .dark-theme {
       --bg: #1A1815;
       --text: #E8E2D5;
@@ -41,10 +34,15 @@
       transition: background-color 0.4s, color 0.4s;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background-color: var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
 
     header {
@@ -52,28 +50,34 @@
       color: white;
       padding: 1.2rem 5%;
       text-align: center;
-      position: relative;
+    }
+
+    header h1 {
+      font-size: 1.8rem;
     }
 
     nav {
       background-color: var(--card);
-      padding: 1rem 5%;
+      padding: 0 5%;
       box-shadow: 0 2px 8px var(--shadow);
       position: sticky;
       top: 0;
-      z-index: 100;
+      z-index: 1000;
+      height: var(--nav-height);
     }
 
     .nav-container {
       display: flex;
       justify-content: space-between;
       align-items: center;
+      height: 100%;
     }
 
     nav ul {
       list-style: none;
       display: flex;
       gap: 1.5rem;
+      align-items: center;
     }
 
     nav a {
@@ -81,10 +85,28 @@
       color: var(--accent);
       font-weight: 600;
       font-size: 1.1rem;
+      transition: color 0.3s;
     }
 
     nav a:hover {
       color: var(--highlight);
+    }
+
+    .cart-count {
+      background: var(--highlight);
+      color: var(--text);
+      font-size: 0.7rem;
+      font-weight: bold;
+      padding: 2px 6px;
+      border-radius: 10px;
+      margin-left: 4px;
+      vertical-align: top;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
 
     .theme-toggle {
@@ -99,9 +121,87 @@
       display: flex;
       align-items: center;
       justify-content: center;
+      transition: background 0.3s;
     }
 
-    .hero {
+    .theme-toggle:hover {
+      background: var(--border);
+    }
+
+    .tognav {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s;
+    }
+
+    .tognav:hover {
+      background: var(--border);
+    }
+
+    .mobile-menu {
+      display: none;
+      position: fixed;
+      top: var(--nav-height);
+      left: 0;
+      width: 100%;
+      background: var(--card);
+      box-shadow: 0 4px 15px var(--shadow);
+      z-index: 999;
+      transform: translateY(-100%);
+      opacity: 0;
+      transition: transform 0.3s ease, opacity 0.3s ease;
+    }
+
+    .mobile-menu.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .mobile-menu ul {
+      list-style: none;
+    }
+
+    .mobile-menu ul li {
+      border-bottom: 1px solid var(--border);
+    }
+
+    .mobile-menu ul li:last-child {
+      border-bottom: none;
+    }
+
+    .mobile-menu ul li a {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1rem 5%;
+      color: var(--accent);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.05rem;
+      transition: background 0.3s, color 0.3s;
+    }
+
+    .mobile-menu ul li a:hover {
+      background: var(--border);
+      color: var(--highlight);
+    }
+
+    .mobile-menu ul li a i {
+      width: 24px;
+      text-align: center;
+      color: var(--highlight);
+    }
+
+    .introduction {
       text-align: center;
       padding: 4rem 2rem;
       background: linear-gradient(rgba(139, 90, 43, 0.05), rgba(139, 90, 43, 0.05)), url('picture/background.jpg');
@@ -113,20 +213,21 @@
       box-shadow: 0 10px 30px var(--shadow);
     }
 
-    .hero h1 {
+    .introduction h1 {
       font-size: 2.8rem;
       margin-bottom: 1rem;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+      line-height: 1.2;
     }
 
-    .hero p {
+    .introduction p {
       max-width: 700px;
       margin: 0 auto 2rem;
       font-size: 1.2rem;
       opacity: 0.9;
     }
 
-    .btn {
+    .viewdetbut {
       display: inline-block;
       background: var(--highlight);
       color: var(--text);
@@ -137,7 +238,7 @@
       transition: transform 0.3s;
     }
 
-    .btn:hover {
+    .viewdetbut:hover {
       transform: translateY(-3px);
     }
 
@@ -184,12 +285,14 @@
     .product-info h3 {
       margin-bottom: 0.5rem;
       color: var(--text);
+      font-size: 1.2rem;
     }
 
     .price {
       color: var(--highlight);
       font-weight: bold;
       font-size: 1.2rem;
+      margin-bottom: 1rem;
     }
 
     .why-us {
@@ -199,6 +302,16 @@
       margin: 3rem auto;
       max-width: 900px;
       box-shadow: 0 8px 20px var(--shadow);
+    }
+
+    .why-us h2 {
+      text-align: center;
+      color: var(--accent);
+    }
+
+    .why-us p {
+      text-align: center;
+      margin-bottom: 1.5rem;
     }
 
     .values {
@@ -215,6 +328,11 @@
       margin-bottom: 0.8rem;
     }
 
+    .value h3 {
+      margin-bottom: 0.5rem;
+      color: var(--text);
+    }
+
     footer {
       background: var(--accent);
       color: white;
@@ -222,29 +340,381 @@
       padding: 1.5rem;
       margin-top: 3rem;
     }
-.cart-count {
-  background: var(--highlight); /* Gold: #C6A961 */
-  color: var(--text);           /* Dark text */
-  font-size: 0.7rem;
-  font-weight: bold;
-  padding: 2px 6px;
-  border-radius: 10px;
-  margin-left: 4px;
-  vertical-align: top;
-}
+
+    @media (max-width: 992px) {
+      header h1 {
+        font-size: 1.6rem;
+      }
+
+      nav ul {
+        gap: 1.2rem;
+      }
+
+      nav a {
+        font-size: 1rem;
+      }
+
+      .introduction h1 {
+        font-size: 2.4rem;
+      }
+
+      .introduction p {
+        font-size: 1.1rem;
+      }
+
+      h2 {
+        font-size: 2rem;
+      }
+
+      .featured {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        gap: 1.8rem;
+      }
+    }
+
     @media (max-width: 768px) {
-      .nav-container { flex-direction: column; gap: 1rem; }
-      nav ul { flex-wrap: wrap; justify-content: center; }
-      .hero h1 { font-size: 2rem; }
+      :root {
+        --nav-height: 60px;
+      }
+
+      header {
+        padding: 1rem 4%;
+      }
+
+      header h1 {
+        font-size: 1.4rem;
+      }
+
+      nav {
+        padding: 0 4%;
+      }
+
+      nav ul {
+        display: none;
+      }
+
+      .tognav {
+        display: flex;
+      }
+
+      .mobile-menu {
+        display: block;
+      }
+
+      .theme-toggle {
+        width: 36px;
+        height: 36px;
+        font-size: 1.1rem;
+      }
+
+      .introduction {
+        margin: 1.5rem 4%;
+        padding: 3rem 1.5rem;
+      }
+
+      .introduction h1 {
+        font-size: 2rem;
+      }
+
+      .introduction p {
+        font-size: 1rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .viewdetbut , .expcolbut {
+        padding: 0.7rem 1.8rem;
+        font-size: 0.95rem;
+      }
+
+      section {
+        padding: 2.5rem 4%;
+      }
+
+      h2 {
+        font-size: 1.7rem;
+        margin-bottom: 2rem;
+      }
+
+      .featured {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        gap: 1.5rem;
+      }
+
+      .product-card img {
+        height: 180px;
+      }
+
+      .product-info {
+        padding: 1rem;
+      }
+
+      .product-info h3 {
+        font-size: 1.1rem;
+      }
+
+      .price {
+        font-size: 1.1rem;
+      }
+
+      .why-us {
+        padding: 2rem 1.5rem;
+        margin: 2.5rem auto;
+      }
+
+      .values {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .value i {
+        font-size: 1.8rem;
+      }
+
+      footer {
+        padding: 1.2rem;
+        font-size: 0.9rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      header {
+        padding: 0.8rem 3%;
+      }
+
+      header h1 {
+        font-size: 1.2rem;
+      }
+
+      nav {
+        padding: 0 3%;
+      }
+
+      .introduction {
+        margin: 1rem 3%;
+        padding: 2.5rem 1.2rem;
+        border-radius: 12px;
+      }
+
+      .introduction h1 {
+        font-size: 1.7rem;
+      }
+
+      .introduction p {
+        font-size: 0.95rem;
+      }
+
+      .viewdetbut , .expcollbut {
+        padding: 0.65rem 1.5rem;
+        font-size: 0.9rem;
+      }
+
+      section {
+        padding: 2rem 3%;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+        margin-bottom: 1.5rem;
+      }
+
+      .featured {
+        grid-template-columns: 1fr;
+        gap: 1.2rem;
+      }
+
+      .product-card img {
+        height: 160px;
+      }
+
+      .product-info {
+        padding: 0.9rem;
+      }
+
+      .product-info h3 {
+        font-size: 1.05rem;
+      }
+
+      .price {
+        font-size: 1.05rem;
+      }
+
+      .why-us {
+        padding: 1.5rem 1.2rem;
+        margin: 2rem auto;
+        border-radius: 12px;
+      }
+
+      .why-us p {
+        font-size: 0.9rem;
+      }
+
+      .value h3 {
+        font-size: 1.05rem;
+      }
+
+      .value p {
+        font-size: 0.88rem;
+      }
+
+      footer {
+        padding: 1rem;
+        font-size: 0.85rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      header h1 {
+        font-size: 1.1rem;
+      }
+
+      .introduction {
+        padding: 2rem 1rem;
+      }
+
+      .introduction h1 {
+        font-size: 1.5rem;
+      }
+
+      .introduction p {
+        font-size: 0.88rem;
+      }
+
+      .viewdetbut , .expcollbut {
+        padding: 0.6rem 1.3rem;
+        font-size: 0.85rem;
+      }
+
+      h2 {
+        font-size: 1.35rem;
+      }
+
+      .product-card img {
+        height: 150px;
+      }
+
+      .product-info h3 {
+        font-size: 1rem;
+      }
+
+      .price {
+        font-size: 1rem;
+      }
+
+      .why-us {
+        padding: 1.2rem 1rem;
+      }
+
+      .value i {
+        font-size: 1.6rem;
+      }
+
+      .value h3 {
+        font-size: 1rem;
+      }
+
+      .value p {
+        font-size: 0.82rem;
+      }
+    }
+
+    @media (max-width: 768px) and (orientation: landscape) {
+      :root {
+        --nav-height: 55px;
+      }
+
+      header {
+        padding: 0.6rem 3%;
+      }
+
+      header h1 {
+        font-size: 1.1rem;
+      }
+
+      nav {
+        padding: 0 3%;
+      }
+
+      .introduction {
+        margin: 1rem 3%;
+        padding: 1.5rem 1rem;
+      }
+
+      .introduction h1 {
+        font-size: 1.4rem;
+      }
+
+      .introduction p {
+        font-size: 0.85rem;
+        margin-bottom: 1rem;
+      }
+
+      .viewdetbut , expcollbut {
+        padding: 0.6rem 1.3rem;
+        font-size: 0.85rem;
+      }
+
+      section {
+        padding: 1.5rem 3%;
+      }
+
+      h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+      }
+
+      .featured {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1rem;
+      }
+
+      .product-card img {
+        height: 140px;
+      }
+
+      .product-info {
+        padding: 0.8rem;
+      }
+
+      .product-info h3 {
+        font-size: 0.95rem;
+      }
+
+      .price {
+        font-size: 0.95rem;
+      }
+
+      .why-us {
+        padding: 1.2rem 1rem;
+        margin: 1.5rem auto;
+      }
+
+      .values {
+        gap: 1rem;
+      }
+
+      .value i {
+        font-size: 1.5rem;
+      }
+
+      .value h3 {
+        font-size: 0.95rem;
+      }
+
+      .value p {
+        font-size: 0.8rem;
+      }
+
+      footer {
+        padding: 0.8rem;
+        font-size: 0.8rem;
+      }
     }
   </style>
 </head>
 <body>
-
   <header>
     <h1>Furniture Store</h1>
   </header>
-
   <nav>
     <div class="nav-container">
       <ul>
@@ -252,20 +722,32 @@
         <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
-      <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
+        <li><a href="cart.html">🛒 <span class="cart-count">0</span></a></li>
       </ul>
-      <button id="themeToggle" class="theme-toggle">
-        <i class="fas fa-moon"></i>
-      </button>
+      <div class="nav-right">
+        <button id="toggletheme" class="theme-toggle">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="tognav" id="tognav">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
     </div>
   </nav>
-
-  <div class="hero">
+  <div class="mobile-menu" id="mobilemenu">
+    <ul>
+      <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
+      <li><a href="products.html"><i class="fas fa-box"></i> Products</a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li><a href="cart.html"><i class="fas fa-shopping-cart"></i> Cart <span class="cart-count">0</span></a></li>
+    </ul>
+  </div>
+  <div class="introduction">
     <h1>Handcrafted Furniture for Modern Living</h1>
     <p>Designed with sustainability, built to last. Every piece tells a story of craftsmanship and care.</p>
-    <a href="products.html" class="btn">Explore Collection</a>
+    <a href="products.html" class="expcollbut">Explore Collection</a>
   </div>
-
   <section>
     <h2>Featured Pieces</h2>
     <div class="featured">
@@ -274,7 +756,7 @@
         <div class="product-info">
           <h3>Luxury Velvet Sofa</h3>
           <div class="price">$999</div>
-          <a href="product-detail.html?type=sofa" class="btn" style="padding:0.5rem 1rem; font-size:0.9rem;">View Details</a>
+          <a href="product-detail.html?type=sofa" class="viewdetbut" style="padding:0.5rem 1rem; font-size:0.9rem;">View Details</a>
         </div>
       </div>
       <div class="product-card">
@@ -282,7 +764,7 @@
         <div class="product-info">
           <h3>Queen Oak Bed</h3>
           <div class="price">$799</div>
-          <a href="product-detail.html?type=bed" class="btn" style="padding:0.5rem 1rem; font-size:0.9rem;">View Details</a>
+          <a href="product-detail.html?type=bed" class="viewdetbut" style="padding:0.5rem 1rem; font-size:0.9rem;">View Details</a>
         </div>
       </div>
       <div class="product-card">
@@ -290,16 +772,15 @@
         <div class="product-info">
           <h3>Modern Glass Dining Table</h3>
           <div class="price">$499</div>
-          <a href="product-detail.html?type=table" class="btn" style="padding:0.5rem 1rem; font-size:0.9rem;">View Details</a>
+          <a href="product-detail.html?type=table" class="viewdetbut" style="padding:0.5rem 1rem; font-size:0.9rem;">View Details</a>
         </div>
       </div>
     </div>
   </section>
-
   <section>
     <div class="why-us">
-      <h2 style="text-align:center; color:var(--accent);">Why Choose Us?</h2>
-      <p style="text-align:center; margin-bottom:1.5rem;">Inspired by the vision of sustainable, human-centered design — like BMW’s “Changing Lanes” and Audi’s mission to “design the mobility of tomorrow” — we craft furniture that’s built for life.</p>
+      <h2>Why Choose Us?</h2>
+      <p>Inspired by the vision of sustainable, human-centered design — like BMW's "Changing Lanes" and Audi's mission to "design the mobility of tomorrow" — we craft furniture that's built for life.</p>
       <div class="values">
         <div class="value">
           <i class="fas fa-tree"></i>
@@ -314,6 +795,7 @@
         <div class="value">
           <i class="fas fa-truck"></i>
           <h3>Carbon-Neutral Delivery</h3>
+          <p>Eco-friendly shipping options</p>
         </div>
       </div>
     </div>
@@ -323,35 +805,6 @@
     <p>&copy; 2025 Furniture Store. Crafted with care.</p>
   </footer>
 
-  <script>
-    const html = document.getElementById('htmlRoot');
-    const toggleBtn = document.getElementById('themeToggle');
-    const icon = toggleBtn.querySelector('i');
-
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    if (savedTheme === 'dark') {
-      html.classList.add('dark-theme');
-      icon.className = 'fas fa-sun';
-    }
-
-    toggleBtn.addEventListener('click', () => {
-      html.classList.toggle('dark-theme');
-      const isDark = html.classList.contains('dark-theme');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-      icon.className = isDark ? 'fas fa-sun' : 'fas fa-moon';
-    });
-  function updateCartCount() {
-    const cart = JSON.parse(localStorage.getItem('cart') || '[]');
-    const totalCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-    const countElements = document.querySelectorAll('.cart-count');
-    countElements.forEach(el => {
-      el.textContent = totalCount;
-      el.style.display = totalCount > 0 ? 'inline' : 'none';
-    });
-  }
-
-  // Run on page load
-  document.addEventListener('DOMContentLoaded', updateCartCount);
-  </script>
+<script src="darkmode.js"></script>
 </body>
 </html>
